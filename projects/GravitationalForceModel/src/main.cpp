@@ -5,10 +5,8 @@ int main()
 {
     const double gravity = 32.2;   // ft/s^2
     const double gc = 32.2;        // conversion constant
-
-    double mass1 = 5.0;
-    double mass2 = 4.2;
-
+    double mass1 = 5.0; //test1
+    double mass2 = 4.2; //test2
     double weight1 = (mass1 * gravity) / gc;
     double weight2 = (mass2 * gravity) / gc;
 
