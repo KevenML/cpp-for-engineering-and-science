@@ -1,10 +1,7 @@
 # CIS 2485 – C++ Science & Engineering  
-## Unit #2 Assignment – Console Application
+## Console Application
 
 **Student:** Keven Gonzalez  
-**Course:** CIS 2485  
-**Assignment:** Unit #2 Assignment  
-**Program:** Assignment2  
 **Language:** C++  
 
 ---
