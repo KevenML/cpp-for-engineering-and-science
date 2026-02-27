@@ -54,10 +54,10 @@ Compute stress:
 
 S = (700 × 96 × 3) / 21.4  
 S = 201600 / 21.4  
-S ≈ 9411 psi  
+S ≈ 9420.56 psi  
 
 **Result:**  
-Stress ≈ 9411 psi  
+Stress ≈ 9420.56 psi  
 
 ---
 
