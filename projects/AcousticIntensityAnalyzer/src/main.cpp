@@ -1,30 +1,68 @@
+/*
+---------------------------------------------------------
+Project: AcousticIntensityAnalyzer
+Course : CIS 2485 – Intro to C++ for Science & Engineering
+File   : Assignment-3A.cpp
+
+Description:
+Calculates sound loudness in decibels using:
+
+        dB = 10 * log10(SL / RL)
+
+SL = Sound intensity level
+RL = Reference intensity level
+
+---------------------------------------------------------
+*/
+
 #include <iostream>
+#include <cmath>      // for log10()
+#include <iomanip>    // for formatting output
+
 using namespace std;
 
-/*
- Acoustic Intensity Analyzer
- I = P / A
-
- I = intensity (W/m^2)
- P = acoustic power (W)
- A = area (m^2)
-*/
+// Function to compute decibel level
+double calculateDecibel(double SL, double RL)
+{
+    return 10.0 * log10(SL / RL);
+}
 
 int main()
 {
-    double power;
-    double area;
+    // Reference Level (RL)
+    const double RL = 1.0;
 
-    cout << "Enter acoustic power (W): ";
-    cin >> power;
+    cout << fixed << setprecision(2);
+    cout << "=== Acoustic Intensity Analyzer ===\n\n";
 
-    cout << "Enter surface area (m^2): ";
-    cin >> area;
+    // Verification case (Busy Street)
+    double busyStreet = 10000000.0;
+    double dbBusyStreet = calculateDecibel(busyStreet, RL);
 
-    double intensity = power / area;
+    cout << "Busy Street:\n";
+    cout << "Sound Intensity = " << busyStreet << " RL\n";
+    cout << "Decibel Level   = " << dbBusyStreet << " dB\n\n";
 
-    cout << "Acoustic Intensity = "
-         << intensity << " W/m^2" << endl;
+    // a. Whisper
+    double whisper = 200.0;
+    cout << "Whisper:\n";
+    cout << "Sound Intensity = " << whisper << " RL\n";
+    cout << "Decibel Level   = "
+         << calculateDecibel(whisper, RL) << " dB\n\n";
+
+    // b. Rock Band
+    double rockBand = 1000000000000.0;
+    cout << "Rock Band:\n";
+    cout << "Sound Intensity = " << rockBand << " RL\n";
+    cout << "Decibel Level   = "
+         << calculateDecibel(rockBand, RL) << " dB\n\n";
+
+    // c. Airplane Takeoff
+    double airplane = 100000000000000.0;
+    cout << "Airplane Takeoff:\n";
+    cout << "Sound Intensity = " << airplane << " RL\n";
+    cout << "Decibel Level   = "
+         << calculateDecibel(airplane, RL) << " dB\n";
 
     return 0;
 }
