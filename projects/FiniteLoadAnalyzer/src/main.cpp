@@ -1,3 +1,30 @@
+/*
+ * Name: FiniteLoadAnalyzer()
+ *
+ * Description: This application calculates bending stress (psi)
+ *              using the flexure formula:
+ *              sigma = (M * c) / I
+ *              where M = L * d
+ *
+ * Input Params:
+ *      double L      - Load (lbs)
+ *      double d_ft   - Distance from fixed end (feet)
+ *      double h      - Beam height (inches)
+ *      double I      - Moment of inertia (in^4)
+ *
+ * Return:
+ *      double S      - Bending stress (psi)
+ *
+ * Author: Keven Gonzalez
+ *
+ * Version: 1.0
+ *
+ * Date: 03/03/2026
+ *
+ * Course: CIS2485
+ *
+ */
+
 #include <iostream>
 using namespace std;
 
