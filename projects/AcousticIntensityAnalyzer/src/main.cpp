@@ -1,18 +1,31 @@
 /*
----------------------------------------------------------
-Project: AcousticIntensityAnalyzer
-Course : CIS 2485 – Intro to C++ for Science & Engineering
-
-Description:
-Calculates sound loudness in decibels using:
-
-        dB = 10 * log10(SL / RL)
-
-SL = Sound intensity level
-RL = Reference intensity level
-
----------------------------------------------------------
-*/
+ * Name: AcousticIntensityAnalyzer
+ *
+ * Description: This application calculates sound loudness
+ *              in decibels (dB) using the acoustic intensity
+ *              logarithmic formula.
+ *
+ *              dB = 10 * log10(SL / RL)
+ *
+ *              The program evaluates several real-world
+ *              sound intensity examples including:
+ *              Busy Street, Whisper, Rock Band, and
+ *              Airplane Takeoff.
+ *
+ * Input Params: double SL (Sound Intensity Level)
+ *               double RL (Reference Intensity Level)
+ *
+ * Return: double dB (Decibel Level)
+ *
+ * Author: Keven Gonzalez
+ *
+ * Version: 1.0
+ *
+ * Date: [Enter submission date]
+ *
+ * Course: CIS2485 – Intro to C++ for Science & Engineering
+ *
+ */
 
 #include <iostream>
 #include <cmath>      // for log10()
