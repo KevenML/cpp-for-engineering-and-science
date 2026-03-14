@@ -1,13 +1,34 @@
+/*
+* Name: ConvectiveHeatTransfer()
+*
+* Description: This application calculates the convective heat transfer
+*              rate using Newton's Law of Cooling.
+*
+* Input Params:
+*      double h     → heat transfer coefficient
+*      double A     → surface area
+*      double Ts    → surface temperature
+*      double Tinf  → ambient temperature
+*      int unitSystem → unit selection (1 = SI, 2 = US)
+*
+* Return:
+*      int → program termination status
+*
+* Author:
+*
+* Version: 1.0
+*
+* Date: 02/20/2026
+*
+* Course: CIS2485
+*
+*/
+
+
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-/*
-    Convective Heat Transfer Calculator
-    Newton's Law of Cooling
-
-    Q = h * A * (Ts - Tinf)
-*/
 
 int main()
 {
