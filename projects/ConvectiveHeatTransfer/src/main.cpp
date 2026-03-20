@@ -1,103 +1,79 @@
-/*
-* Name: ConvectiveHeatTransfer()
-*
-* Description: This application calculates the convective heat transfer
-*              rate using Newton's Law of Cooling.
-*
-* Input Params:
-*      double h     → heat transfer coefficient
-*      double A     → surface area
-*      double Ts    → surface temperature
-*      double Tinf  → ambient temperature
-*      int unitSystem → unit selection (1 = SI, 2 = US)
-*
-* Return:
-*      int → program termination status
-*
-* Author:
-*
-* Version: 1.0
-*
-* Date: 02/20/2026
-*
-* Course: CIS2485
-*
-*/
-
-
 #include <iostream>
-#include <cmath>
 using namespace std;
-
 
 int main()
 {
-    double h;        // heat transfer coefficient
-    double A;        // surface area
-    double Ts;       // surface temperature
-    double Tinf;     // ambient temperature
-    double Q;        // heat transfer rate
-    int unitSystem;
+    int unit;
+    int material;
 
-    cout << "=====================================\n";
-    cout << " Convective Heat Transfer Calculator\n";
-    cout << " (Newton's Law of Cooling)\n";
-    cout << "=====================================\n\n";
+    double k;          // thermal conductivity
+    double T2, T1;     // temperatures
+    double w;          // thickness
+    double Q;          // heat flux
 
-    cout << "Select Unit System:\n";
-    cout << "1. SI Units (W, m^2, C)\n";
-    cout << "2. U.S. Customary (BTU/hr, ft^2, F)\n";
-    cout << "Choice: ";
-    cin >> unitSystem;
+    cout << "====================================\n";
+    cout << " Heat Conduction Calculator\n";
+    cout << " Fourier Law  Q = k(T2-T1)/w\n";
+    cout << "====================================\n";
 
-    cout << "\nEnter heat transfer coefficient (h): ";
-    cin >> h;
+    // ask unit only
+    cout << "Select Unit System\n";
+    cout << "1 = SI (W/m*K)\n";
+    cout << "2 = US (BTU/hr*ft*F)\n";
+    cin >> unit;
 
-    cout << "Enter surface area (A): ";
-    cin >> A;
+    // ask material only
+    cout << "\nSelect Material\n";
+    cout << "1 = Air\n";
+    cout << "2 = Cement\n";
+    cout << "3 = Glass\n";
+    cout << "4 = Soil\n";
+    cout << "5 = Wood (Oak)\n";
+    cout << "6 = Wood (Pine)\n";
+    cin >> material;
 
-    cout << "Enter surface temperature (Ts): ";
-    cin >> Ts;
-
-    cout << "Enter ambient temperature (T∞): ";
-    cin >> Tinf;
-
-    // Calculate heat transfer
-    Q = h * A * (Ts - Tinf);
-
-    cout << "\n========== RESULTS ==========\n";
-
-    if (unitSystem == 1)
+    // assign conductivity from TABLE
+    if(unit == 1)
     {
-        cout << "Heat Transfer Rate: " << Q << " Watts\n";
+        if(material == 1) k = 0.025;
+        else if(material == 2) k = 0.29;
+        else if(material == 3) k = 1.1;
+        else if(material == 4) k = 1.5;
+        else if(material == 5) k = 0.17;
+        else if(material == 6) k = 0.12;
+        else { cout << "Invalid material\n"; return 0; }
     }
-    else if (unitSystem == 2)
+    else if(unit == 2)
     {
-        cout << "Heat Transfer Rate: " << Q << " BTU/hr\n";
+        if(material == 1) k = 0.0015;
+        else if(material == 2) k = 0.17;
+        else if(material == 3) k = 0.645;
+        else if(material == 4) k = 0.88;
+        else if(material == 5) k = 0.096;
+        else if(material == 6) k = 0.065;
+        else { cout << "Invalid material\n"; return 0; }
     }
     else
     {
-        cout << "Invalid unit selection.\n";
+        cout << "Invalid unit system\n";
         return 0;
     }
 
-    // Engineering interpretation
-    if (Ts < Tinf)
-    {
-        cout << "Heat is flowing INTO the object.\n";
-    }
+    // ===== FIXED DATA FROM PROBLEM (cement verification example) =====
+    T2 = 32;     // hot side
+    T1 = -7;     // cold side
+    w = 0.15;    // thickness
+
+    Q = k * (T2 - T1) / w;
+
+    cout << "\nHeat Flux Q = " << Q;
+
+    if(unit == 1)
+        cout << " W/m^2\n";
     else
-    {
-        cout << "Heat is flowing OUT of the object.\n";
-    }
+        cout << " BTU/hr*ft^2\n";
 
-    // Safety warning
-    if (fabs(Q) > 10000)
-    {
-        cout << "WARNING: High heat transfer rate detected.\n";
-    }
-
-    cout << "=====================================\n";
+    cout << "====================================\n";
 
     return 0;
 }
