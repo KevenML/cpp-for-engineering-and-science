@@ -3,43 +3,55 @@ using namespace std;
 
 int main()
 {
-    int unit;
-    int material;
+    int unit, material, problem;
 
     double k;
-    double T2 = 32;     // hot side temperature from problem
-    double T1 = -7;     // cold side temperature from problem
-    double w  = 0.15;   // wall thickness from problem
+    double T2, T1, w;
     double Q;
 
-    cout << "=========================================\n";
-    cout << " STEADY HEAT CONDUCTION THROUGH A WALL\n";
-    cout << " Fourier Law  Q = k (T2 - T1) / w\n";
-    cout << "=========================================\n\n";
+    cout << "HEAT CONDUCTION PROGRAM\n";
+    cout << "Fourier Law  Q = k(T2-T1)/w\n\n";
 
-    cout << "This program calculates heat flux through a wall\n";
-    cout << "using fixed temperatures and thickness from the\n";
-    cout << "assignment problem statement.\n\n";
+    cout << "Select problem case:\n";
+    cout << "1 = Cement wall verification (Part B)\n";
+    cout << "2 = Glass pane (Part C-i)\n";
+    cout << "3 = Air column (Part C-ii)\n";
+    cin >> problem;
 
-    // UNIT QUESTION
-    cout << "Select the UNIT SYSTEM for thermal conductivity data:\n";
-    cout << "   Enter 1 → SI Units (W/m*K)\n";
-    cout << "   Enter 2 → U.S. Units (BTU/hr*ft*F)\n";
-    cout << "Your choice: ";
+    // assign scenario data
+    if(problem == 1)
+    {
+        T2 = 32;
+        T1 = -7;
+        w = 0.15;
+    }
+    else if(problem == 2)
+    {
+        T2 = 24;
+        T1 = 15;
+        w = 0.005;
+    }
+    else if(problem == 3)
+    {
+        T2 = 23;
+        T1 = 14;
+        w = 0.10;
+    }
+    else
+    {
+        cout << "Invalid problem selection\n";
+        return 0;
+    }
+
+    cout << "\nSelect unit system:\n";
+    cout << "1 = SI\n";
+    cout << "2 = US\n";
     cin >> unit;
 
-    // MATERIAL QUESTION
-    cout << "\nSelect the WALL MATERIAL:\n";
-    cout << "   1 → Air\n";
-    cout << "   2 → Cement\n";
-    cout << "   3 → Glass\n";
-    cout << "   4 → Soil\n";
-    cout << "   5 → Wood (Oak)\n";
-    cout << "   6 → Wood (Pine)\n";
-    cout << "Your choice: ";
+    cout << "\nSelect material:\n";
+    cout << "1 Air\n2 Cement\n3 Glass\n4 Soil\n5 Wood Oak\n6 Wood Pine\n";
     cin >> material;
 
-    // ASSIGN CONDUCTIVITY FROM TABLE
     if(unit == 1)
     {
         if(material == 1) k = 0.025;
@@ -48,7 +60,7 @@ int main()
         else if(material == 4) k = 1.5;
         else if(material == 5) k = 0.17;
         else if(material == 6) k = 0.12;
-        else { cout << "Invalid material selection.\n"; return 0; }
+        else { cout << "Invalid material\n"; return 0; }
     }
     else if(unit == 2)
     {
@@ -58,31 +70,22 @@ int main()
         else if(material == 4) k = 0.88;
         else if(material == 5) k = 0.096;
         else if(material == 6) k = 0.065;
-        else { cout << "Invalid material selection.\n"; return 0; }
+        else { cout << "Invalid material\n"; return 0; }
     }
     else
     {
-        cout << "Invalid unit system selection.\n";
+        cout << "Invalid unit system\n";
         return 0;
     }
 
-    // FOURIER CALCULATION
     Q = k * (T2 - T1) / w;
 
-    cout << "\n-----------------------------------------\n";
-    cout << "RESULT: Heat Flux Through Wall\n";
-    cout << "-----------------------------------------\n";
-    cout << "Hot Side Temperature = " << T2 << endl;
-    cout << "Cold Side Temperature = " << T1 << endl;
-    cout << "Wall Thickness = " << w << endl;
-    cout << "Thermal Conductivity Used = " << k << endl;
+    cout << "\nHeat flux Q = " << Q;
 
     if(unit == 1)
-        cout << "\nHeat Flux = " << Q << " W/m^2\n";
+        cout << " W/m^2\n";
     else
-        cout << "\nHeat Flux = " << Q << " BTU/hr*ft^2\n";
-
-    cout << "-----------------------------------------\n";
+        cout << " BTU/hr*ft^2\n";
 
     return 0;
 }
