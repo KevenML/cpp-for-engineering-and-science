@@ -1,4 +1,34 @@
-#include <iostream>
+/*
+ * Name: ArithmeticQuizApp()
+ *
+ * Description: This application helps an elementary school student
+ *              practice basic arithmetic operations. The program
+ *              generates two random positive single-digit integers
+ *              and allows the student to select an operation from
+ *              a menu (Addition, Subtraction, Multiplication,
+ *              Division, or Modulus). The student answers repeated
+ *              questions until correct or enters -1 to return to
+ *              the main menu. The program tracks summary statistics
+ *              for correct and incorrect responses.
+ *
+ * Input Params:
+ *      int menuChoice   - User selected arithmetic operation
+ *      int answer       - Student’s answer to generated question
+ *
+ * Return:
+ *      int              - Program terminates when user selects Exit
+ *
+ * Author: Keven Gonzalez
+ *
+ * Version: 1.0
+ *
+ * Date: 03/24/2026
+ *
+ * Course: CIS2485
+ *
+ */
+
+ #include <iostream>
 #include <cstdlib>
 #include <ctime>
 
