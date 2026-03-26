@@ -38,73 +38,100 @@
 *
 */
 
-#include <iostream>
-#include <iomanip>
-using namespace std;
 
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <limits>
+#include <cctype>
 using namespace std;
 
-int main()
+const int STUDENTS = 5;
+const int CLASSES = 3;
+
+// ===== VALIDATE NAME =====
+bool isValidName(string name)
 {
-    const int STUDENTS = 5;
-    const int CLASSES = 3;
+    for (char c : name)
+        if (!isalpha(c))
+            return false;
+    return true;
+}
 
-    string firstName[STUDENTS];
-    string lastName[STUDENTS];
-    double grades[STUDENTS][CLASSES];
-    double average[STUDENTS];
-
-    int countAbove70 = 0;
-
-    // ===== INPUT SECTION =====
+// ===== INPUT STUDENT DATA =====
+void inputStudents(string firstName[], string lastName[],
+                   double grades[][CLASSES])
+{
     for (int i = 0; i < STUDENTS; i++)
     {
-        cout << "\n==============================\n";
-        cout << "Entering information for STUDENT #" << i + 1 << endl;
-        cout << "==============================\n";
+        cout << "\n========== STUDENT #" << i + 1 << " ==========\n";
 
-        cout << "Enter FIRST NAME: ";
-        cin >> firstName[i];
+        while (true)
+        {
+            cout << "Enter FIRST NAME (letters only): ";
+            cin >> firstName[i];
 
-        cout << "Enter LAST NAME: ";
-        cin >> lastName[i];
+            if (!isValidName(firstName[i]))
+            {
+                cout << "Invalid input. Try again.\n";
+                continue;
+            }
+            break;
+        }
 
-        double sum = 0;
+        while (true)
+        {
+            cout << "Enter LAST NAME (letters only): ";
+            cin >> lastName[i];
+
+            if (!isValidName(lastName[i]))
+            {
+                cout << "Invalid input. Try again.\n";
+                continue;
+            }
+            break;
+        }
 
         for (int j = 0; j < CLASSES; j++)
         {
             while (true)
             {
-                cout << "Enter NUMERIC grade (0 - 100) for CLASS "
+                cout << "Enter grade (0-100) for CLASS "
                      << j + 1 << ": ";
 
                 cin >> grades[i][j];
 
-                // check if user typed letters
                 if (cin.fail())
                 {
-                    cout << "Invalid input. Please enter NUMBERS only.\n";
+                    cout << "Numbers only. Try again.\n";
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     continue;
                 }
 
-                // check range
                 if (grades[i][j] < 0 || grades[i][j] > 100)
                 {
-                    cout << "Grade must be between 0 and 100. Try again.\n";
+                    cout << "Out of range. Try again.\n";
                     continue;
                 }
 
-                break; // valid input
+                break;
             }
-
-            sum += grades[i][j];
         }
+    }
+}
+
+// ===== COMPUTE AVERAGES =====
+int computeAverages(double grades[][CLASSES], double average[])
+{
+    int countAbove70 = 0;
+
+    for (int i = 0; i < STUDENTS; i++)
+    {
+        double sum = 0;
+
+        for (int j = 0; j < CLASSES; j++)
+            sum += grades[i][j];
 
         average[i] = sum / CLASSES;
 
@@ -112,38 +139,57 @@ int main()
             countAbove70++;
     }
 
-    double percent = (double)countAbove70 / STUDENTS * 100;
+    return countAbove70;
+}
 
-    // ===== OUTPUT REPORT =====
-    cout << "\n\n==============================================\n";
-    cout << "               STUDENT REPORT                  \n";
-    cout << "==============================================\n";
+// ===== PRINT REPORT =====
+void printReport(string firstName[], string lastName[],
+                 double average[], double percent)
+{
+    cout << "\n\n============================================\n";
+    cout << "              STUDENT REPORT                \n";
+    cout << "============================================\n";
 
     cout << left
-         << setw(15) << "FIRST NAME"
-         << setw(15) << "LAST NAME"
-         << setw(10) << "AVERAGE"
+         << setw(18) << "FIRST NAME"
+         << setw(18) << "LAST NAME"
+         << setw(12) << "AVERAGE"
          << endl;
 
-    cout << "----------------------------------------------\n";
+    cout << "--------------------------------------------\n";
 
     cout << fixed << setprecision(2);
 
     for (int i = 0; i < STUDENTS; i++)
     {
-        cout << setw(15) << firstName[i]
-             << setw(15) << lastName[i]
-             << setw(10) << average[i]
+        cout << setw(18) << firstName[i]
+             << setw(18) << lastName[i]
+             << setw(12) << average[i]
              << endl;
     }
 
-    cout << "\nPercentage of students above 70% = "
-         << percent << "%\n";
+    cout << "\nPercentage above 70% = " << percent << "%\n";
 
     if (percent > 50)
-        cout << "NOTICE: Tuition will increase by 10% next semester.\n";
+        cout << "NOTICE: Tuition will increase by 10%.\n";
     else
-        cout << "NOTICE: Tuition will NOT increase next semester.\n";
+        cout << "NOTICE: Tuition will NOT increase.\n";
+}
+
+int main()
+{
+    string firstName[STUDENTS];
+    string lastName[STUDENTS];
+    double grades[STUDENTS][CLASSES];
+    double average[STUDENTS];
+
+    inputStudents(firstName, lastName, grades);
+
+    int countAbove70 = computeAverages(grades, average);
+
+    double percent = (double)countAbove70 / STUDENTS * 100;
+
+    printReport(firstName, lastName, average, percent);
 
     return 0;
 }
