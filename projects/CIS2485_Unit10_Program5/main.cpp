@@ -1,69 +1,56 @@
-/*--------------------------------------------------
+/*------------------------------------------
 File Name: main.cpp
 
 Description:
-Program for calculating voltage using current and resistance arrays.
-Calls calcVolts() using pointers and displays results.
+This program calculates voltage using given
+current and resistance values. It uses a function
+with pointers to do the calculation and then
+prints everything in a table.
 
-Input: None 
-
-Output: Table of current, resistance, and voltage
+Formula used:
+V = I * R
 
 Author: Keven Gonzalez
 Course: CIS2485 
-Version: 2
-Date: may 1 2026
+Date: May 1, 2026
 ---------------------------------------*/
 
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <cctype>   // tolower
-#include <cmath>    // isnan
+#include <cctype>   // for tolower()
+#include <cmath>    // for isnan()
 
 using namespace std;
 
-// Symbolic constant
+// number of elements in arrays
 const int SIZE = 10;
 
-// Function prototypes
+// function declarations
 void calcVolts(double* current, double* resistance, double* voltage, int size);
 bool isValidValue(double value);
 bool validateYesNo(const string& input);
 
-/*
--------------------------------------------------------
-Function: calcVolts
-Purpose:  Compute voltage using pointer arithmetic
--------------------------------------------------------
-*/
+// this function calculates voltage using pointers
 void calcVolts(double* current, double* resistance, double* voltage, int size)
 {
+    // make sure pointers aren't null
     if (!current || !resistance || !voltage) return;
 
     for (int i = 0; i < size; i++)
     {
+        // pointer math instead of current[i]
         *(voltage + i) = (*(current + i)) * (*(resistance + i));
     }
 }
 
-/*
--------------------------------------------------------
-Function: isValidValue
-Purpose:  Validate numeric values
--------------------------------------------------------
-*/
+// checks if the number is valid (not negative or NaN)
 bool isValidValue(double value)
 {
-    return !isnan(value) && value >= 0;
+    return !std::isnan(value) && value >= 0;
 }
 
-/*
--------------------------------------------------------
-Function: validateYesNo
-Purpose:  Validate y/n input using char functions
--------------------------------------------------------
-*/
+// checks if user typed y or n
 bool validateYesNo(const string& input)
 {
     if (input.length() != 1) return false;
@@ -72,38 +59,61 @@ bool validateYesNo(const string& input)
     return (c == 'y' || c == 'n');
 }
 
-/*
--------------------------------------------------------
-Main Function
--------------------------------------------------------
-*/
 int main()
 {
-    double current[SIZE] = {
-        10.62, 14.89, 13.21, 16.55, 18.62,
-        9.47, 6.58, 18.32, 12.15, 3.98
-    };
+    string choice;
 
-    double resistance[SIZE] = {
-        4, 8.5, 6, 7.35, 9,
-        15.3, 3, 5.4, 2.9, 4.8
-    };
-
-    double voltage[SIZE];
-
-    calcVolts(current, resistance, voltage, SIZE);
-
-    cout << fixed << setprecision(2);
-    cout << "Index\tCurrent\tResistance\tVoltage\n";
-    cout << "--------------------------------------------------\n";
-
-    for (int i = 0; i < SIZE; i++)
+    do
     {
-        cout << i << "\t"
-             << current[i] << "\t"
-             << resistance[i] << "\t\t"
-             << voltage[i] << endl;
-    }
+        // given values from textbook
+        double current[SIZE] = {
+            10.62, 14.89, 13.21, 16.55, 18.62,
+            9.47, 6.58, 18.32, 12.15, 3.98
+        };
+
+        double resistance[SIZE] = {
+            4, 8.5, 6, 7.35, 9,
+            15.3, 3, 5.4, 2.9, 4.8
+        };
+
+        double voltage[SIZE];
+
+        // calculate
+        calcVolts(current, resistance, voltage, SIZE);
+
+        // display
+        cout << fixed << setprecision(2);
+        cout << "Index\tCurrent\tResistance\tVoltage\n";
+        cout << "--------------------------------------------------\n";
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            if (!isValidValue(current[i]) || !isValidValue(resistance[i]))
+            {
+                cout << "Invalid data at index " << i << endl;
+                continue;
+            }
+
+            cout << i << "\t"
+                 << current[i] << "\t"
+                 << resistance[i] << "\t\t"
+                 << voltage[i] << endl;
+        }
+
+        // ask user
+        cout << "\nRun again? (y/n): ";
+        cin >> choice;
+
+        // validate input
+        while (!validateYesNo(choice))
+        {
+            cout << "Invalid input. Enter y or n: ";
+            cin >> choice;
+        }
+
+    } while (tolower(choice[0]) == 'y');
+
+    cout << "Program ended.\n";
 
     return 0;
 }
