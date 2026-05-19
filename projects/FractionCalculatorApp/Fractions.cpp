@@ -1,3 +1,15 @@
+/*
+ * Name: Fractions Implementation
+ *
+ * Description:
+ *      Implements all member functions of the Fractions class,
+ *      including validation, simplification, and arithmetic operations.
+ *
+ * Author: Keven Gonzalez
+ * Version: 1.2
+ * Date: may 1, 2026
+ * Course: CIS2485
+ */
 #include "Fractions.h"
 #include <iostream>
 using namespace std;

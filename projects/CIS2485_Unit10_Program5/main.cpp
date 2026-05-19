@@ -20,7 +20,7 @@ Date: May 1, 2026
 #include <string>
 #include <cctype>   // for tolower()
 #include <cmath>    // for isnan()
-
+#include "calcVolts.h"
 using namespace std;
 
 // number of elements in arrays
@@ -30,19 +30,6 @@ const int SIZE = 10;
 void calcVolts(double* current, double* resistance, double* voltage, int size);
 bool isValidValue(double value);
 bool validateYesNo(const string& input);
-
-// this function calculates voltage using pointers
-void calcVolts(double* current, double* resistance, double* voltage, int size)
-{
-    // make sure pointers aren't null
-    if (!current || !resistance || !voltage) return;
-
-    for (int i = 0; i < size; i++)
-    {
-        // pointer math instead of current[i]
-        *(voltage + i) = (*(current + i)) * (*(resistance + i));
-    }
-}
 
 // checks if the number is valid (not negative or NaN)
 bool isValidValue(double value)
